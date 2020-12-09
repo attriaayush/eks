@@ -12,3 +12,8 @@ terraform {
     region  = "eu-west-1"
   }
 }
+
+module "cluster" {
+  source = "../modules/cluster"
+
+}
