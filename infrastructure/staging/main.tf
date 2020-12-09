@@ -16,4 +16,6 @@ terraform {
 module "cluster" {
   source = "../modules/cluster"
 
+  environment = "staging"
+  region      = "eu-west-1"
 }
