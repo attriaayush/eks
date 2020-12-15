@@ -26,3 +26,7 @@ jobs:
         run: terraform plan
           -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}"
           -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      - name: Build Website
+        run: cd website && docker build . -t website --cache-from=docker.pkg.github.com/${{github.repository}}/website
+      - name: Push Images to Registry
+        run: docker push docker.pkg.github.com/${{github.repository}}/website
