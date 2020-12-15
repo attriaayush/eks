@@ -27,7 +27,7 @@ jobs:
           -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}"
           -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
       - name: Basic Authentication
-        run: ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+        run: ${{secrets.GITHUB_TOKEN}} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
       - name: Pull Existing Images
         run: docker pull docker.pkg.github.com/${{github.repository}}/website || true
       - name: Build Website
