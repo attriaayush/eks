@@ -1,0 +1,28 @@
+name: Sample Project
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy:
+    name: Build -----> Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+      - name: Terraform Init
+        id: init
+        working-directory: infrastructure/staging
+        run: terraform init
+          -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}"
+          -backend-config="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      - name: Terraform Plan
+        id: plan
+        working-directory: infrastructure/staging
+        run: terraform plan
+          -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}"
+          -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
